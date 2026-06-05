@@ -1,7 +1,31 @@
 import Link from "next/link";
 import { Layers, Plus } from "lucide-react";
 
-const OFFICIAL_COLLECTIONS = [
+const EMOJI_MAP: Record<string, string> = {
+  "nobel-prize-literature": "🏆",
+  "ancient-sacred-texts": "📜",
+  "100-books-changed-history": "🌍",
+  "philosophy-through-ages": "⚖️",
+  "science-changed-everything": "🔬",
+  "banned-books-history": "🚫",
+  "african-literature": "🌺",
+  "islamic-golden-age": "🌙",
+  "feminist-literature": "✊",
+  "endangered-languages": "🌿",
+  "dystopian-utopian": "🌐",
+  "oral-traditions": "🎙️",
+};
+
+interface CollectionItem {
+  name: string;
+  slug: string;
+  description: string;
+  count: number;
+  featured: boolean;
+  emoji: string;
+}
+
+const PLACEHOLDER_COLLECTIONS: CollectionItem[] = [
   { name: "Nobel Prize in Literature", description: "All winners from 1901 to present", count: 120, slug: "nobel-prize-literature", emoji: "🏆", featured: true },
   { name: "Ancient & Sacred Texts", description: "Foundation texts of human civilisation", count: 340, slug: "ancient-sacred-texts", emoji: "📜", featured: true },
   { name: "100 Books That Changed History", description: "Civilisation-defining works across all eras", count: 100, slug: "100-books-changed-history", emoji: "🌍", featured: true },
@@ -16,7 +40,39 @@ const OFFICIAL_COLLECTIONS = [
   { name: "Oral Traditions Written Down", description: "From spoken word to printed page", count: 145, slug: "oral-traditions", emoji: "🎙️", featured: false },
 ];
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  let OFFICIAL_COLLECTIONS: CollectionItem[] = PLACEHOLDER_COLLECTIONS;
+
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const result = await prisma.collection.findMany({
+      where: { type: "OFFICIAL" },
+      orderBy: { isFeatured: "desc" },
+      take: 20,
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        isFeatured: true,
+        bookCount: true,
+        theme: true,
+      },
+    });
+    if (result.length > 0) {
+      OFFICIAL_COLLECTIONS = result.map((c) => ({
+        name: c.name,
+        slug: c.slug,
+        description: c.description ?? "",
+        count: c.bookCount,
+        featured: c.isFeatured,
+        emoji: EMOJI_MAP[c.slug] ?? "📚",
+      }));
+    }
+  } catch {
+    // DB not available — use placeholder
+  }
+
   const featured = OFFICIAL_COLLECTIONS.filter((c) => c.featured);
   const rest = OFFICIAL_COLLECTIONS.filter((c) => !c.featured);
 

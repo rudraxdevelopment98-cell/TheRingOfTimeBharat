@@ -1,7 +1,7 @@
 import { Globe2 } from "lucide-react";
 import Link from "next/link";
 
-const FEATURED_LANGUAGES = [
+const PLACEHOLDER_LANGUAGES = [
   { code: "en", name: "English", nativeName: "English", flag: "🇬🇧", books: "1,200,000", direction: "LTR" },
   { code: "ar", name: "Arabic", nativeName: "العربية", flag: "🇸🇦", books: "89,000", direction: "RTL" },
   { code: "zh", name: "Chinese", nativeName: "中文", flag: "🇨🇳", books: "210,000", direction: "LTR" },
@@ -19,7 +19,38 @@ const FEATURED_LANGUAGES = [
   { code: "hi", name: "Hindi", nativeName: "हिन्दी", flag: "🇮🇳", books: "43,000", direction: "LTR" },
 ];
 
-export default function LanguagesPage() {
+type LangItem = {
+  code: string;
+  name: string;
+  nativeName: string;
+  flag: string;
+  books: string;
+  direction: string;
+};
+
+export default async function LanguagesPage() {
+  let FEATURED_LANGUAGES: LangItem[] = PLACEHOLDER_LANGUAGES;
+
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const results = await prisma.language.findMany({
+      where: { isFeatured: true },
+      orderBy: { totalBooks: "desc" },
+    });
+    if (results.length > 0) {
+      FEATURED_LANGUAGES = results.map((lang) => ({
+        code: lang.code,
+        name: lang.name,
+        nativeName: lang.nativeName ?? lang.name,
+        flag: lang.flagEmoji ?? "🌐",
+        books: (lang.totalBooks ?? 0).toLocaleString(),
+        direction: lang.direction ?? "LTR",
+      }));
+    }
+  } catch {
+    /* use placeholder */
+  }
+
   return (
     <div style={{ backgroundColor: "var(--bg-base)" }}>
       <div

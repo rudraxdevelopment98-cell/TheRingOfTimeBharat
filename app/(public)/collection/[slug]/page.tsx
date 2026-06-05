@@ -11,7 +11,7 @@ interface Book {
   slug: string;
 }
 
-const COLLECTION = {
+const FALLBACK_COLLECTION = {
   description:
     "An assembled canon for the unhurried reader — works that taught the West how to think, to grieve, and to govern the self. Each volume here was chosen not for fame alone but for the conversations it still starts across two thousand years.",
   followers: 18_420,
@@ -26,7 +26,7 @@ const SUB_COLLECTIONS = [
   { name: "Marcus Aurelius", slug: "marcus-aurelius" },
 ];
 
-const BOOKS: Book[] = [
+const FALLBACK_BOOKS: Book[] = [
   {
     title: "Meditations",
     author: "Marcus Aurelius",
@@ -108,9 +108,88 @@ function titleFromSlug(slug: string): string {
     .join(" ");
 }
 
-export default function CollectionPage({ params }: { params: { slug: string } }) {
-  const name = titleFromSlug(params.slug);
-  const [featured, ...rest] = BOOKS;
+export default async function CollectionPage({ params }: { params: { slug: string } }) {
+  let collectionMeta = FALLBACK_COLLECTION;
+  let books: Book[] = FALLBACK_BOOKS;
+  let collectionName = titleFromSlug(params.slug);
+  let notFound = false;
+
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const collectionData = await prisma.collection.findUnique({
+      where: { slug: params.slug },
+      include: {
+        books: {
+          orderBy: { position: "asc" },
+          include: {
+            book: {
+              include: {
+                authors: { include: { person: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (collectionData === null) {
+      notFound = true;
+    } else {
+      collectionName = collectionData.name;
+      collectionMeta = {
+        description: collectionData.description ?? FALLBACK_COLLECTION.description,
+        followers: collectionData.followerCount ?? FALLBACK_COLLECTION.followers,
+        curatorNote: FALLBACK_COLLECTION.curatorNote,
+        curatorName: FALLBACK_COLLECTION.curatorName,
+      };
+
+      if (collectionData.books.length > 0) {
+        books = collectionData.books.map((cb) => {
+          const b = cb.book;
+          const primaryAuthor = b.authors[0]?.person?.name ?? "Unknown";
+          const yearVal = b.yearPublished ?? b.yearWritten;
+          return {
+            title: b.title,
+            author: primaryAuthor,
+            year: yearVal != null ? String(yearVal) : "—",
+            language: b.originalLanguage ?? "—",
+            curatorNote: cb.curatorNote ?? "",
+            cover: "📖",
+            slug: b.slug,
+          };
+        });
+      }
+    }
+  } catch {
+    // DB not available — use fallback
+  }
+
+  if (notFound) {
+    return (
+      <div
+        style={{ backgroundColor: "var(--bg-base)", minHeight: "100vh" }}
+        className="flex items-center justify-center"
+      >
+        <div className="text-center">
+          <p
+            className="text-3xl font-light mb-4"
+            style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
+          >
+            Collection not found
+          </p>
+          <Link
+            href="/collections"
+            className="text-sm underline underline-offset-4"
+            style={{ color: "var(--accent-primary)" }}
+          >
+            ← Back to Collections
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const [featured, ...rest] = books;
 
   return (
     <div style={{ backgroundColor: "var(--bg-base)", minHeight: "100vh" }}>
@@ -156,7 +235,7 @@ export default function CollectionPage({ params }: { params: { slug: string } })
               className="aspect-[2/3] rounded-2xl flex items-center justify-center shadow-2xl"
               style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border)" }}
             >
-              <span className="text-7xl">{featured.cover}</span>
+              <span className="text-7xl">{featured?.cover ?? "📚"}</span>
             </div>
             <p
               className="mt-4 text-center text-xs uppercase tracking-widest"
@@ -164,16 +243,20 @@ export default function CollectionPage({ params }: { params: { slug: string } })
             >
               Featured volume
             </p>
-            <Link
-              href={`/book/${featured.slug}`}
-              className="mt-1 block text-center text-lg font-light transition-opacity hover:opacity-80"
-              style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
-            >
-              {featured.title}
-            </Link>
-            <p className="text-center text-sm" style={{ color: "var(--text-muted)" }}>
-              {featured.author}
-            </p>
+            {featured && (
+              <>
+                <Link
+                  href={`/book/${featured.slug}`}
+                  className="mt-1 block text-center text-lg font-light transition-opacity hover:opacity-80"
+                  style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
+                >
+                  {featured.title}
+                </Link>
+                <p className="text-center text-sm" style={{ color: "var(--text-muted)" }}>
+                  {featured.author}
+                </p>
+              </>
+            )}
           </div>
 
           <div className="lg:col-span-8">
@@ -190,20 +273,20 @@ export default function CollectionPage({ params }: { params: { slug: string } })
               className="text-5xl md:text-6xl font-light leading-[1.05] mb-5"
               style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
             >
-              {name}
+              {collectionName}
             </h1>
             <p
               className="text-lg max-w-2xl mb-7"
               style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
             >
-              {COLLECTION.description}
+              {collectionMeta.description}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-8">
-              <Stat icon={<BookOpen className="h-4 w-4" />} value={`${BOOKS.length} books`} />
+              <Stat icon={<BookOpen className="h-4 w-4" />} value={`${books.length} books`} />
               <Stat
                 icon={<Users className="h-4 w-4" />}
-                value={`${COLLECTION.followers.toLocaleString()} followers`}
+                value={`${collectionMeta.followers.toLocaleString()} followers`}
               />
               <span
                 className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium text-white"
@@ -223,13 +306,13 @@ export default function CollectionPage({ params }: { params: { slug: string } })
                 className="text-lg italic leading-relaxed"
                 style={{ color: "var(--text-primary)", fontFamily: "var(--font-source-serif)" }}
               >
-                “{COLLECTION.curatorNote}”
+                "{collectionMeta.curatorNote}"
               </blockquote>
               <figcaption
                 className="mt-3 text-xs uppercase tracking-widest"
                 style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
               >
-                {COLLECTION.curatorName}
+                {collectionMeta.curatorName}
               </figcaption>
             </figure>
           </div>

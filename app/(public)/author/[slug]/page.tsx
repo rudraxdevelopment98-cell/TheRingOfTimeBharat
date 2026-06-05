@@ -11,83 +11,31 @@ import {
 } from "lucide-react";
 import { AuthorTimeline } from "@/components/author/AuthorTimeline";
 
-interface Work {
-  title: string;
-  year: string;
-  language: string;
-  note: string;
-  cover: string;
-  slug: string;
-}
-
-const AUTHOR = {
-  birthYear: "121",
-  deathYear: "180",
-  nationality: "Roman",
-  era: "Classical Antiquity · Pax Romana",
-  languagesWritten: ["Koine Greek", "Latin"],
-  bio:
-    "Born to a prominent family during the height of the Roman Empire, he was adopted into the imperial line and groomed for power from boyhood. Yet his temperament leaned always toward the study chamber rather than the throne room. Schooled in Stoic philosophy by his beloved tutor, he came to see public office not as privilege but as duty — a burden to be borne with equanimity. During the long campaigns along the northern frontier, amid plague and war, he kept a private journal in Greek, never intended for other eyes. Written to no audience but himself, these notes became one of the most enduring meditations on duty, mortality, and the practice of virtue ever set down. He governed an empire while quietly governing, first of all, himself.",
-  wikipedia: "https://en.wikipedia.org/wiki/Marcus_Aurelius",
-  website: "https://bibliosphere.example/authors",
+type PersonData = {
+  name: string;
+  bio: string | null;
+  aiBioSummary: string | null;
+  birthYear: number | null;
+  deathYear: number | null;
+  nationality: string | null;
+  languagesWritten: string[];
+  wikipediaUrl: string | null;
+  websiteUrl: string | null;
+  books: Array<{
+    book: {
+      title: string;
+      slug: string;
+      yearPublished: number | null;
+      originalLanguage: string | null;
+      aiSummaryShort: string | null;
+    };
+  }>;
+  quotes: Array<{
+    id: string;
+    text: string;
+    book: { title: string } | null;
+  }>;
 };
-
-const WORKS: Work[] = [
-  {
-    title: "Meditations",
-    year: "c. 180",
-    language: "Greek",
-    note: "Private notes to himself, written on campaign — the closest philosophy comes to a diary.",
-    cover: "🏛️",
-    slug: "meditations-marcus-aurelius",
-  },
-  {
-    title: "Letters to Fronto",
-    year: "c. 145",
-    language: "Latin",
-    note: "Affectionate correspondence with his rhetoric master, full of youthful warmth.",
-    cover: "✉️",
-    slug: "letters-to-fronto-marcus-aurelius",
-  },
-  {
-    title: "On Duty and the Common Good",
-    year: "c. 170",
-    language: "Greek",
-    note: "Reflections on the obligations that bind ruler to ruled.",
-    cover: "⚖️",
-    slug: "on-duty-marcus-aurelius",
-  },
-  {
-    title: "Fragments on Mortality",
-    year: "c. 175",
-    language: "Greek",
-    note: "Scattered passages on death as nature's quiet, ordinary return.",
-    cover: "🕯️",
-    slug: "fragments-on-mortality-marcus-aurelius",
-  },
-  {
-    title: "The Frontier Journals",
-    year: "c. 172",
-    language: "Greek",
-    note: "Notes kept during the Marcomannic Wars, dust and philosophy intertwined.",
-    cover: "🛡️",
-    slug: "frontier-journals-marcus-aurelius",
-  },
-  {
-    title: "On Providence",
-    year: "c. 178",
-    language: "Greek",
-    note: "An inquiry into order, fate, and the reason that governs the cosmos.",
-    cover: "🌌",
-    slug: "on-providence-marcus-aurelius",
-  },
-];
-
-const QUOTES = [
-  "You have power over your mind — not outside events. Realize this, and you will find strength.",
-  "Waste no more time arguing about what a good man should be. Be one.",
-  "The happiness of your life depends upon the quality of your thoughts.",
-];
 
 function nameFromSlug(slug: string): string {
   return slug
@@ -96,9 +44,64 @@ function nameFromSlug(slug: string): string {
     .join(" ");
 }
 
-export default function AuthorPage({ params }: { params: { slug: string } }) {
-  const name = nameFromSlug(params.slug);
+export default async function AuthorPage({ params }: { params: { slug: string } }) {
+  let personData: PersonData | null = null;
+
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const result = await prisma.person.findUnique({
+      where: { slug: params.slug },
+      include: {
+        books: {
+          include: { book: true },
+          where: { role: "AUTHOR" },
+        },
+        quotes: {
+          take: 5,
+          include: { book: true },
+          orderBy: { likesCount: "desc" },
+        },
+      },
+    });
+    if (result) personData = result as unknown as PersonData;
+  } catch {
+    /* use placeholder */
+  }
+
+  if (!personData) {
+    return (
+      <div
+        style={{ backgroundColor: "var(--bg-base)", minHeight: "100vh" }}
+        className="flex items-center justify-center"
+      >
+        <div className="text-center">
+          <p
+            className="text-2xl font-light mb-4"
+            style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-muted)" }}
+          >
+            Author not found
+          </p>
+          <Link
+            href="/authors"
+            className="text-sm underline"
+            style={{ color: "var(--accent-primary)" }}
+          >
+            &larr; Back to Authors
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const name = personData.name || nameFromSlug(params.slug);
   const firstName = name.split(" ")[0];
+  const bio = personData.bio ?? personData.aiBioSummary ?? "";
+  const birthYear = personData.birthYear ? String(personData.birthYear) : "Unknown";
+  const deathYear = personData.deathYear ? String(personData.deathYear) : "Present";
+  const nationality = personData.nationality ?? "Unknown";
+  const languagesWritten = personData.languagesWritten ?? [];
+  const wikipedia = personData.wikipediaUrl ?? "";
+  const website = personData.websiteUrl ?? "";
 
   return (
     <div style={{ backgroundColor: "var(--bg-base)", minHeight: "100vh" }}>
@@ -127,7 +130,7 @@ export default function AuthorPage({ params }: { params: { slug: string } }) {
             className="text-base max-w-2xl"
             style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
           >
-            {AUTHOR.era}
+            {nationality}
           </p>
         </div>
       </div>
@@ -152,40 +155,42 @@ export default function AuthorPage({ params }: { params: { slug: string } }) {
 
             <div className="space-y-2.5 mb-6">
               <InfoRow icon={<Calendar className="h-4 w-4" />}>
-                {AUTHOR.birthYear} – {AUTHOR.deathYear}
+                {birthYear} – {deathYear}
               </InfoRow>
-              <InfoRow icon={<MapPin className="h-4 w-4" />}>{AUTHOR.nationality}</InfoRow>
-              <InfoRow icon={<Globe className="h-4 w-4" />}>{AUTHOR.era}</InfoRow>
+              <InfoRow icon={<MapPin className="h-4 w-4" />}>{nationality}</InfoRow>
+              <InfoRow icon={<Globe className="h-4 w-4" />}>{nationality}</InfoRow>
             </div>
 
-            <div className="mb-6">
-              <p
-                className="text-xs uppercase tracking-widest mb-2.5"
-                style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
-              >
-                Languages
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {AUTHOR.languagesWritten.map((lang) => (
-                  <span
-                    key={lang}
-                    className="rounded-full border px-3 py-1 text-xs"
-                    style={{
-                      borderColor: "var(--border)",
-                      backgroundColor: "var(--bg-surface)",
-                      color: "var(--text-muted)",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
-                  >
-                    {lang}
-                  </span>
-                ))}
+            {languagesWritten.length > 0 && (
+              <div className="mb-6">
+                <p
+                  className="text-xs uppercase tracking-widest mb-2.5"
+                  style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
+                >
+                  Languages
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {languagesWritten.map((lang) => (
+                    <span
+                      key={lang}
+                      className="rounded-full border px-3 py-1 text-xs"
+                      style={{
+                        borderColor: "var(--border)",
+                        backgroundColor: "var(--bg-surface)",
+                        color: "var(--text-muted)",
+                        fontFamily: "var(--font-dm-sans)",
+                      }}
+                    >
+                      {lang}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="space-y-2">
-              <ExternalRow href={AUTHOR.wikipedia} label="Wikipedia" />
-              <ExternalRow href={AUTHOR.website} label="Website" />
+              {wikipedia && <ExternalRow href={wikipedia} label="Wikipedia" />}
+              {website && <ExternalRow href={website} label="Website" />}
             </div>
 
             {/* Influence Network teaser */}
@@ -220,99 +225,103 @@ export default function AuthorPage({ params }: { params: { slug: string } }) {
           {/* Right column */}
           <div className="lg:col-span-8 space-y-14">
             {/* Biography */}
-            <section>
-              <SectionHeader icon={<User className="h-4 w-4" />}>Biography</SectionHeader>
-              <p
-                className="text-lg leading-relaxed"
-                style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
-              >
-                {AUTHOR.bio}
-              </p>
-            </section>
+            {bio && (
+              <section>
+                <SectionHeader icon={<User className="h-4 w-4" />}>Biography</SectionHeader>
+                <p
+                  className="text-lg leading-relaxed"
+                  style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
+                >
+                  {bio}
+                </p>
+              </section>
+            )}
 
             {/* Works */}
-            <section>
-              <SectionHeader icon={<BookOpen className="h-4 w-4" />}>Works</SectionHeader>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {WORKS.map((work) => (
-                  <Link
-                    key={work.slug}
-                    href={`/book/${work.slug}`}
-                    className="group flex items-start gap-4 rounded-2xl border p-5 transition-all hover:-translate-y-0.5 hover:shadow-md"
-                    style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
-                  >
-                    <div
-                      className="aspect-[2/3] w-14 flex-shrink-0 flex items-center justify-center rounded-xl"
-                      style={{ backgroundColor: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+            {personData.books.length > 0 && (
+              <section>
+                <SectionHeader icon={<BookOpen className="h-4 w-4" />}>Works</SectionHeader>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {personData.books.map(({ book }) => (
+                    <Link
+                      key={book.slug}
+                      href={`/book/${book.slug}`}
+                      className="group flex items-start gap-4 rounded-2xl border p-5 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                      style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
                     >
-                      <span className="text-2xl">{work.cover}</span>
-                    </div>
-                    <div className="min-w-0">
-                      <h3
-                        className="text-lg font-light leading-tight mb-1 group-hover:opacity-80 transition-opacity"
-                        style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
+                      <div
+                        className="aspect-[2/3] w-14 flex-shrink-0 flex items-center justify-center rounded-xl"
+                        style={{ backgroundColor: "var(--bg-elevated)", border: "1px solid var(--border)" }}
                       >
-                        {work.title}
-                      </h3>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        <Chip>{work.year}</Chip>
-                        <Chip>{work.language}</Chip>
+                        <BookOpen className="h-6 w-6" style={{ color: "var(--text-faint)" }} />
                       </div>
-                      <p
-                        className="text-sm italic"
-                        style={{ color: "var(--text-faint)", fontFamily: "var(--font-source-serif)" }}
-                      >
-                        {work.note}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
+                      <div className="min-w-0">
+                        <h3
+                          className="text-lg font-light leading-tight mb-1 group-hover:opacity-80 transition-opacity"
+                          style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
+                        >
+                          {book.title}
+                        </h3>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {book.yearPublished && <Chip>{book.yearPublished}</Chip>}
+                          {book.originalLanguage && <Chip>{book.originalLanguage}</Chip>}
+                        </div>
+                        {book.aiSummaryShort && (
+                          <p
+                            className="text-sm italic"
+                            style={{ color: "var(--text-faint)", fontFamily: "var(--font-source-serif)" }}
+                          >
+                            {book.aiSummaryShort}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Notable Quotes */}
-            <section>
-              <SectionHeader icon={<Quote className="h-4 w-4" />}>Notable Quotes</SectionHeader>
-              <div className="space-y-5">
-                {QUOTES.map((quote, i) => (
-                  <figure
-                    key={i}
-                    className="relative rounded-2xl border p-7 pl-14"
-                    style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
-                  >
-                    <Quote
-                      className="absolute left-6 top-6 h-7 w-7"
-                      style={{ color: "var(--accent-primary)", opacity: 0.5 }}
-                      aria-hidden
-                    />
-                    <blockquote
-                      className="text-xl italic leading-relaxed"
-                      style={{ color: "var(--text-primary)", fontFamily: "var(--font-source-serif)" }}
+            {personData.quotes.length > 0 && (
+              <section>
+                <SectionHeader icon={<Quote className="h-4 w-4" />}>Notable Quotes</SectionHeader>
+                <div className="space-y-5">
+                  {personData.quotes.map((quote) => (
+                    <figure
+                      key={quote.id}
+                      className="relative rounded-2xl border p-7 pl-14"
+                      style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
                     >
-                      {quote}
-                    </blockquote>
-                    <figcaption
-                      className="mt-3 text-xs uppercase tracking-widest"
-                      style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
-                    >
-                      {name}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            </section>
+                      <Quote
+                        className="absolute left-6 top-6 h-7 w-7"
+                        style={{ color: "var(--accent-primary)", opacity: 0.5 }}
+                        aria-hidden
+                      />
+                      <blockquote
+                        className="text-xl italic leading-relaxed"
+                        style={{ color: "var(--text-primary)", fontFamily: "var(--font-source-serif)" }}
+                      >
+                        {quote.text}
+                      </blockquote>
+                      <figcaption
+                        className="mt-3 text-xs uppercase tracking-widest"
+                        style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
+                      >
+                        {name}{quote.book ? ` · ${quote.book.title}` : ""}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Timeline */}
             <section>
               <SectionHeader icon={<Calendar className="h-4 w-4" />}>Timeline</SectionHeader>
               <AuthorTimeline
                 events={[
-                  { year: AUTHOR.birthYear, label: `Born — ${AUTHOR.nationality} lineage`, type: "birth" },
-                  { year: "145", label: "Letters to Fronto", type: "work" },
-                  { year: "161", label: "Accession to the imperial throne", type: "event" },
-                  { year: "170", label: "On Duty and the Common Good", type: "work" },
-                  { year: "180", label: "Meditations completed on campaign", type: "work" },
-                  { year: AUTHOR.deathYear, label: "Died at Vindobona", type: "death" },
+                  { year: birthYear, label: `Born — ${nationality} lineage`, type: "birth" },
+                  { year: deathYear, label: `Died`, type: "death" },
                 ]}
               />
             </section>
