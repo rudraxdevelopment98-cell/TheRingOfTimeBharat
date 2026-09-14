@@ -4,9 +4,9 @@ const LEGEND: { type: GraphNodeType; label: string; color: string }[] = [
   { type: "BOOK", label: "Book", color: "var(--accent-primary)" },
   { type: "PERSON", label: "Person", color: "var(--accent-gold)" },
   { type: "CONCEPT", label: "Concept", color: "var(--accent-secondary)" },
-  { type: "MOVEMENT", label: "Movement", color: "#7c3aed" },
-  { type: "EVENT", label: "Event", color: "#b5338a" },
-  { type: "PLACE", label: "Place", color: "#4a6fa5" },
+  { type: "MOVEMENT", label: "Movement", color: "var(--category-purple)" },
+  { type: "EVENT", label: "Event", color: "var(--category-magenta)" },
+  { type: "PLACE", label: "Place", color: "var(--category-blue)" },
 ];
 
 export function GraphLegend() {

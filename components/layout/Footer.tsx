@@ -15,7 +15,7 @@ export function Footer() {
                 className="flex h-7 w-7 items-center justify-center rounded"
                 style={{ backgroundColor: "var(--accent-primary)" }}
               >
-                <BookOpen className="h-3.5 w-3.5 text-white" />
+                <BookOpen className="h-3.5 w-3.5" style={{ color: "var(--on-accent-primary)" }} />
               </div>
               <span
                 className="text-lg font-semibold"

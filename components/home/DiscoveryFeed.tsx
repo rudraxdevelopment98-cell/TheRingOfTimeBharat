@@ -41,7 +41,7 @@ export function DiscoveryFeed() {
         <div className="mb-10">
           <p
             className="text-xs uppercase tracking-widest mb-2 font-medium"
-            style={{ color: "var(--accent-gold)" }}
+            style={{ color: "var(--accent-gold-text)" }}
           >
             Discovery
           </p>
@@ -115,8 +115,8 @@ export function DiscoveryFeed() {
         <div className="mt-12 text-center">
           <Link
             href="/explore"
-            className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:scale-105"
-            style={{ backgroundColor: "var(--accent-primary)" }}
+            className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-sm font-medium transition-all hover:opacity-90 hover:scale-105"
+            style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
           >
             <BookOpen className="h-4 w-4" />
             Explore all 2.5 million books

@@ -87,7 +87,7 @@ export default async function CollectionsPage() {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <Layers className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-                <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+                <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
                   Collections
                 </p>
               </div>
@@ -103,8 +103,8 @@ export default async function CollectionsPage() {
             </div>
             <Link
               href="/collections/new"
-              className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white"
-              style={{ backgroundColor: "var(--accent-primary)" }}
+              className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
+              style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
             >
               <Plus className="h-4 w-4" />
               Create Collection

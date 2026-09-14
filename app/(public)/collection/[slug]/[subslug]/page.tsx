@@ -66,7 +66,7 @@ export default function SubCollectionPage({
             <Layers className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
             <p
               className="text-xs uppercase tracking-widest font-medium"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+              style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
             >
               {collectionName} · Sub-collection
             </p>

@@ -17,12 +17,12 @@ const GENRES = [
 ];
 
 const ERAS = [
-  { name: "Ancient", range: "Before 500 AD", count: "8,900", color: "#c9a84c" },
-  { name: "Medieval", range: "500 – 1400", count: "12,400", color: "#8b4513" },
-  { name: "Renaissance", range: "1400 – 1600", count: "15,600", color: "#2c5f2e" },
-  { name: "Enlightenment", range: "1600 – 1800", count: "28,900", color: "#4a6fa5" },
-  { name: "Modern", range: "1800 – 1950", count: "145,000", color: "#7c3aed" },
-  { name: "Contemporary", range: "1950 – Present", count: "2,100,000", color: "#b5338a" },
+  { name: "Ancient", range: "Before 500 AD", count: "8,900", color: "var(--accent-gold-text)" },
+  { name: "Medieval", range: "500 – 1400", count: "12,400", color: "var(--accent-primary-text)" },
+  { name: "Renaissance", range: "1400 – 1600", count: "15,600", color: "var(--accent-secondary-text)" },
+  { name: "Enlightenment", range: "1600 – 1800", count: "28,900", color: "var(--category-blue)" },
+  { name: "Modern", range: "1800 – 1950", count: "145,000", color: "var(--category-purple)" },
+  { name: "Contemporary", range: "1950 – Present", count: "2,100,000", color: "var(--category-magenta)" },
 ];
 
 export default function ExplorePage() {
@@ -37,7 +37,7 @@ export default function ExplorePage() {
             <Compass className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
             <p
               className="text-xs uppercase tracking-widest font-medium"
-              style={{ color: "var(--accent-gold)" }}
+              style={{ color: "var(--accent-gold-text)" }}
             >
               Explore
             </p>
@@ -141,8 +141,8 @@ export default function ExplorePage() {
           </p>
           <Link
             href="/search"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white"
-            style={{ backgroundColor: "var(--accent-primary)" }}
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
+            style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
           >
             <Filter className="h-4 w-4" />
             Advanced Search

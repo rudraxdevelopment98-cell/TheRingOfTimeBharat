@@ -46,7 +46,7 @@ export function HeroSection() {
               color: "var(--text-muted)",
             }}
           >
-            <Sparkles className="h-3 w-3" style={{ color: "var(--accent-gold)" }} />
+            <Sparkles className="h-3 w-3" style={{ color: "var(--accent-gold-text)" }} />
             A digital Library of Alexandria
           </div>
 
@@ -102,8 +102,8 @@ export function HeroSection() {
               />
               <button
                 type="submit"
-                className="flex-shrink-0 rounded-xl px-4 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "var(--accent-primary)" }}
+                className="flex-shrink-0 rounded-xl px-4 py-1.5 text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
               >
                 Search
               </button>
@@ -113,8 +113,8 @@ export function HeroSection() {
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <Link
               href="/explore"
-              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white transition-all hover:opacity-90 hover:scale-105"
-              style={{ backgroundColor: "var(--accent-primary)" }}
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all hover:opacity-90 hover:scale-105"
+              style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
             >
               Start Exploring
               <ArrowRight className="h-4 w-4" />

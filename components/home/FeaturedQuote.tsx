@@ -7,7 +7,7 @@ export function FeaturedQuote() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
         <div
           className="text-6xl mb-6 font-serif leading-none select-none"
-          style={{ color: "var(--accent-gold)", fontFamily: "var(--font-cormorant)" }}
+          style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-cormorant)" }}
         >
           &ldquo;
         </div>

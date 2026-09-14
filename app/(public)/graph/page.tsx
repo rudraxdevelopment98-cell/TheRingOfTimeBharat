@@ -111,9 +111,9 @@ const TYPE_META: { type: GraphNodeType; label: string; color: string }[] = [
   { type: "BOOK", label: "Book", color: "var(--accent-primary)" },
   { type: "PERSON", label: "Person", color: "var(--accent-gold)" },
   { type: "CONCEPT", label: "Concept", color: "var(--accent-secondary)" },
-  { type: "MOVEMENT", label: "Movement", color: "#7c3aed" },
-  { type: "EVENT", label: "Event", color: "#b5338a" },
-  { type: "PLACE", label: "Place", color: "#4a6fa5" },
+  { type: "MOVEMENT", label: "Movement", color: "var(--category-purple)" },
+  { type: "EVENT", label: "Event", color: "var(--category-magenta)" },
+  { type: "PLACE", label: "Place", color: "var(--category-blue)" },
 ];
 
 const ALL_TYPES = TYPE_META.map((t) => t.type);
@@ -200,7 +200,7 @@ export default function GraphPage() {
             <Network className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
             <p
               className="text-xs uppercase tracking-widest font-medium"
-              style={{ color: "var(--accent-gold)" }}
+              style={{ color: "var(--accent-gold-text)" }}
             >
               Knowledge Graph
             </p>
@@ -251,7 +251,7 @@ export default function GraphPage() {
                       style={{
                         borderColor: on ? "var(--accent-primary)" : "var(--border)",
                         backgroundColor: on ? "var(--accent-primary)" : "transparent",
-                        color: on ? "#ffffff" : "var(--text-muted)",
+                        color: on ? "var(--on-accent-primary)" : "var(--text-muted)",
                         fontFamily: "var(--font-dm-sans)",
                       }}
                     >
@@ -315,7 +315,7 @@ export default function GraphPage() {
                     {selected.type === "BOOK" ? (
                       <BookOpen className="h-4 w-4" style={{ color: "var(--accent-primary)" }} />
                     ) : selected.type === "PERSON" ? (
-                      <User className="h-4 w-4" style={{ color: "var(--accent-gold)" }} />
+                      <User className="h-4 w-4" style={{ color: "var(--accent-gold-text)" }} />
                     ) : (
                       <Info className="h-4 w-4" style={{ color: "var(--accent-secondary)" }} />
                     )}

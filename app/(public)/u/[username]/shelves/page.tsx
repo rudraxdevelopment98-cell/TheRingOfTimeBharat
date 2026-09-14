@@ -4,8 +4,8 @@ import { Library, BookOpen, Heart, Check, Plus, ArrowLeft } from "lucide-react";
 const SHELVES = [
   { name: "Currently Reading", icon: BookOpen, count: 3, color: "var(--accent-primary)", books: ["📖", "📘", "📙"] },
   { name: "Want to Read", icon: Plus, count: 24, color: "var(--accent-secondary)", books: ["📗", "📕", "📜"] },
-  { name: "Completed", icon: Check, count: 89, color: "var(--accent-gold)", books: ["📖", "📘", "📙"] },
-  { name: "Favourites", icon: Heart, count: 12, color: "#b5338a", books: ["📗", "📕", "📜"] },
+  { name: "Completed", icon: Check, count: 89, color: "var(--accent-gold-text)", books: ["📖", "📘", "📙"] },
+  { name: "Favourites", icon: Heart, count: 12, color: "var(--category-magenta)", books: ["📗", "📕", "📜"] },
 ];
 
 const CUSTOM_LISTS = [
@@ -32,7 +32,7 @@ export default function ShelvesPage({ params }: { params: { username: string } }
           </Link>
           <div className="flex items-center gap-3 mb-2">
             <Library className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
               My Library
             </p>
           </div>
@@ -99,8 +99,8 @@ export default function ShelvesPage({ params }: { params: { username: string } }
             <h2 className="text-lg font-medium" style={{ color: "var(--text-muted)" }}>Custom Lists</h2>
             <Link
               href="/collections/new"
-              className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-white"
-              style={{ backgroundColor: "var(--accent-primary)" }}
+              className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium"
+              style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
             >
               <Plus className="h-3 w-3" /> New List
             </Link>

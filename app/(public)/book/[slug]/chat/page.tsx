@@ -25,7 +25,7 @@ export default function BookChatPage({ params }: { params: { slug: string } }) {
         <div className="mb-8">
           <p
             className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest"
-            style={{ color: "var(--accent-gold)" }}
+            style={{ color: "var(--accent-gold-text)" }}
           >
             <Sparkles className="h-3.5 w-3.5" />
             AI Reading Assistant

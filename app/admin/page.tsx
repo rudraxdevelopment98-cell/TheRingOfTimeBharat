@@ -14,8 +14,8 @@ import {
 const stats = [
   { icon: Database, label: "Total Books", value: "25,421", color: "var(--accent-primary)" },
   { icon: Users, label: "Total Authors", value: "8,340", color: "var(--accent-secondary)" },
-  { icon: ListTodo, label: "Collections", value: "142", color: "var(--accent-gold)" },
-  { icon: Cpu, label: "Pending AI Jobs", value: "7", color: "#e05252" },
+  { icon: ListTodo, label: "Collections", value: "142", color: "var(--accent-gold-text)" },
+  { icon: Cpu, label: "Pending AI Jobs", value: "7", color: "var(--danger)" },
   { icon: Users, label: "Users", value: "3,201", color: "var(--accent-primary)" },
   { icon: Globe, label: "Languages", value: "102", color: "var(--accent-secondary)" },
 ];
@@ -37,9 +37,9 @@ const aiJobs = [
 ];
 
 function statusStyle(status: string): React.CSSProperties {
-  if (status === "DONE") return { backgroundColor: "#16a34a22", color: "#16a34a" };
-  if (status === "PROCESSING") return { backgroundColor: "#2563eb22", color: "#2563eb" };
-  return { backgroundColor: "#d9770622", color: "#d97706" };
+  if (status === "DONE") return { backgroundColor: "color-mix(in srgb, var(--success) 14%, transparent)", color: "var(--success)" };
+  if (status === "PROCESSING") return { backgroundColor: "color-mix(in srgb, var(--info) 14%, transparent)", color: "var(--info)" };
+  return { backgroundColor: "color-mix(in srgb, var(--warning) 14%, transparent)", color: "var(--warning)" };
 }
 
 const quickActions = [
@@ -59,10 +59,10 @@ export default function AdminDashboard() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
-            <Shield className="h-5 w-5" style={{ color: "var(--accent-gold)" }} />
+            <Shield className="h-5 w-5" style={{ color: "var(--accent-gold-text)" }} />
             <span
               className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+              style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
             >
               Admin
             </span>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-opacity hover:opacity-80"
                 style={{
                   backgroundColor: "var(--accent-primary)",
-                  color: "#ffffff",
+                  color: "var(--on-accent-primary)",
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >

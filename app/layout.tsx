@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs synchronously before first paint so the correct theme class is on
+// <html> from the very first frame — no flash of the wrong theme.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='system';var d=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark',d);c.toggle('light',!d);}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -28,6 +32,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

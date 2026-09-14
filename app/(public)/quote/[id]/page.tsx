@@ -60,7 +60,7 @@ export default function QuotePage({ params }: { params: { id: string } }) {
       <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 text-center">
         <Quote
           className="mx-auto mb-8 h-12 w-12"
-          style={{ color: "var(--accent-gold)" }}
+          style={{ color: "var(--accent-gold-text)" }}
           aria-hidden
         />
         <blockquote
@@ -123,8 +123,8 @@ export default function QuotePage({ params }: { params: { id: string } }) {
             Copy link
           </button>
           <button
-            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5"
-            style={{ backgroundColor: "var(--accent-primary)", fontFamily: "var(--font-dm-sans)" }}
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5"
+            style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)", fontFamily: "var(--font-dm-sans)" }}
           >
             <Share2 className="h-4 w-4" />
             Share

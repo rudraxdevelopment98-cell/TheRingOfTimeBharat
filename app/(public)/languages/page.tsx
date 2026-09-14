@@ -60,7 +60,7 @@ export default async function LanguagesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-3">
             <Globe2 className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
               Language Hub
             </p>
           </div>

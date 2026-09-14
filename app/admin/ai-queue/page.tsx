@@ -13,9 +13,9 @@ const JOBS = [
 
 const statusConfig: Record<string, { color: string; bg: string; Icon: React.ComponentType<{ className?: string }> }> = {
   done: { color: "var(--accent-secondary)", bg: "color-mix(in srgb, var(--accent-secondary) 12%, transparent)", Icon: CheckCircle },
-  processing: { color: "var(--accent-gold)", bg: "color-mix(in srgb, var(--accent-gold) 12%, transparent)", Icon: Loader2 },
+  processing: { color: "var(--accent-gold-text)", bg: "color-mix(in srgb, var(--accent-gold) 12%, transparent)", Icon: Loader2 },
   pending: { color: "var(--text-faint)", bg: "var(--bg-elevated)", Icon: Clock },
-  failed: { color: "#ef4444", bg: "color-mix(in srgb, #ef4444 12%, transparent)", Icon: AlertCircle },
+  failed: { color: "var(--danger)", bg: "color-mix(in srgb, var(--danger) 12%, transparent)", Icon: AlertCircle },
 };
 
 export default function AdminAIQueuePage() {
@@ -26,7 +26,7 @@ export default function AdminAIQueuePage() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <Cpu className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>Admin</p>
+              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>Admin</p>
             </div>
             <h1 className="text-4xl font-light" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}>AI Job Queue</h1>
             <p className="mt-1 text-sm" style={{ color: "var(--text-muted)" }}>Background AI tasks — summaries, enrichment, recommendations.</p>
@@ -42,9 +42,9 @@ export default function AdminAIQueuePage() {
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
             { label: "Total Jobs", value: "1,284", color: "var(--text-primary)" },
-            { label: "Processing", value: "3", color: "var(--accent-gold)" },
+            { label: "Processing", value: "3", color: "var(--accent-gold-text)" },
             { label: "Completed", value: "1,270", color: "var(--accent-secondary)" },
-            { label: "Failed", value: "11", color: "#ef4444" },
+            { label: "Failed", value: "11", color: "var(--danger)" },
           ].map(({ label, value, color }) => (
             <div key={label} className="rounded-xl border p-4 text-center" style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}>
               <div className="text-2xl font-light mb-0.5" style={{ fontFamily: "var(--font-cormorant)", color }}>{value}</div>

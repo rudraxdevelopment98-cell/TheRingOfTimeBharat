@@ -40,10 +40,10 @@ export default function NewBookPage() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
-            <BookPlus className="h-5 w-5" style={{ color: "var(--accent-gold)" }} />
+            <BookPlus className="h-5 w-5" style={{ color: "var(--accent-gold-text)" }} />
             <span
               className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+              style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
             >
               Admin · Books
             </span>
@@ -167,7 +167,7 @@ export default function NewBookPage() {
                   className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-80"
                   style={{
                     backgroundColor: "var(--accent-primary)",
-                    color: "#ffffff",
+                    color: "var(--on-accent-primary)",
                     fontFamily: "var(--font-dm-sans)",
                   }}
                 >

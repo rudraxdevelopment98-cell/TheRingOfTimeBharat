@@ -9,8 +9,8 @@ const RECENT_IMPORTS = [
 
 const statusConfig: Record<string, { label: string; color: string; Icon: typeof CheckCircle }> = {
   done: { label: "Done", color: "var(--accent-secondary)", Icon: CheckCircle },
-  processing: { label: "Processing", color: "var(--accent-gold)", Icon: Clock },
-  failed: { label: "Failed", color: "#ef4444", Icon: AlertCircle },
+  processing: { label: "Processing", color: "var(--accent-gold-text)", Icon: Clock },
+  failed: { label: "Failed", color: "var(--danger)", Icon: AlertCircle },
 };
 
 export default function AdminImportPage() {
@@ -23,7 +23,7 @@ export default function AdminImportPage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
             <Download className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>Admin</p>
+            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>Admin</p>
           </div>
           <h1 className="text-4xl font-light" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}>
             Data Import
@@ -41,12 +41,12 @@ export default function AdminImportPage() {
             emoji: "📚", title: "Open Library", desc: "Import from openlibrary.org via ISBN or title search. Powers bulk metadata enrichment.",
             action: <div className="flex gap-2 mt-3">
               <input type="text" placeholder="Search title or ISBN…" className="flex-1 rounded-lg border px-3 py-2 text-sm outline-none" style={{ backgroundColor: "var(--bg-elevated)", borderColor: "var(--border)", color: "var(--text-primary)" }} />
-              <button className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-primary)" }}><Search className="h-3.5 w-3.5" /> Search</button>
+              <button className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium" style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}><Search className="h-3.5 w-3.5" /> Search</button>
             </div>,
           },
           {
             emoji: "🆓", title: "Project Gutenberg", desc: "Index all public domain ebooks with epub download links — 60,000+ free books available.",
-            action: <button className="mt-3 flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-secondary)" }}><Download className="h-3.5 w-3.5" /> Run Full Import</button>,
+            action: <button className="mt-3 flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium" style={{ color: "var(--on-accent-secondary)", backgroundColor: "var(--accent-secondary)" }}><Download className="h-3.5 w-3.5" /> Run Full Import</button>,
           },
           {
             emoji: "📊", title: "Goodreads CSV", desc: "Upload your Goodreads export to migrate a user's full reading history.",
@@ -56,7 +56,7 @@ export default function AdminImportPage() {
             emoji: "🔢", title: "ISBN Scanner", desc: "Enter or scan an ISBN to auto-populate all book metadata from multiple sources.",
             action: <div className="flex gap-2 mt-3">
               <input type="text" placeholder="978-0-06-112008-4" className="flex-1 rounded-lg border px-3 py-2 text-sm outline-none font-mono" style={{ backgroundColor: "var(--bg-elevated)", borderColor: "var(--border)", color: "var(--text-primary)", fontFamily: "var(--font-fira-code)" }} />
-              <button className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-primary)" }}><Search className="h-3.5 w-3.5" /> Look Up</button>
+              <button className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium" style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}><Search className="h-3.5 w-3.5" /> Look Up</button>
             </div>,
           },
         ].map(({ emoji, title, desc, action }) => (

@@ -17,11 +17,11 @@ export default function AdminCollectionsPage() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <Layers className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>Admin</p>
+              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>Admin</p>
             </div>
             <h1 className="text-4xl font-light" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}>Collections</h1>
           </div>
-          <Link href="/collections/new" className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-primary)" }}>
+          <Link href="/collections/new" className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium" style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}>
             <Plus className="h-4 w-4" /> New Collection
           </Link>
         </div>
@@ -47,13 +47,13 @@ export default function AdminCollectionsPage() {
                     <span className="text-xs" style={{ color: "var(--text-faint)" }}>{col.bookCount} books</span>
                     <span className="text-xs" style={{ color: "var(--text-faint)" }}>{col.followerCount.toLocaleString()} followers</span>
                     <span className="text-xs rounded-full px-2 py-0.5" style={{ backgroundColor: col.type === "OFFICIAL" ? "color-mix(in srgb, var(--accent-primary) 15%, transparent)" : "var(--bg-elevated)", color: col.type === "OFFICIAL" ? "var(--accent-primary)" : "var(--text-faint)" }}>{col.type}</span>
-                    {col.featured && <span className="text-xs rounded-full px-2 py-0.5" style={{ backgroundColor: "color-mix(in srgb, var(--accent-gold) 15%, transparent)", color: "var(--accent-gold)" }}>Featured</span>}
+                    {col.featured && <span className="text-xs rounded-full px-2 py-0.5" style={{ backgroundColor: "color-mix(in srgb, var(--accent-gold) 15%, transparent)", color: "var(--accent-gold-text)" }}>Featured</span>}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button className="flex h-8 w-8 items-center justify-center rounded-lg border transition-opacity hover:opacity-80" style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}><Edit className="h-3.5 w-3.5" /></button>
-                <button className="flex h-8 w-8 items-center justify-center rounded-lg border transition-opacity hover:opacity-80" style={{ borderColor: "var(--border)", color: "#ef4444" }}><Trash2 className="h-3.5 w-3.5" /></button>
+                <button className="flex h-8 w-8 items-center justify-center rounded-lg border transition-opacity hover:opacity-80" style={{ borderColor: "var(--border)", color: "var(--danger)" }}><Trash2 className="h-3.5 w-3.5" /></button>
               </div>
             </div>
           ))}

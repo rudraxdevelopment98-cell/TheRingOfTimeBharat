@@ -137,8 +137,8 @@ export default async function BookPage({ params }: { params: { slug: string } })
 
             <div className="space-y-3">
               <button
-                className="w-full rounded-xl py-3 px-4 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "var(--accent-primary)" }}
+                className="w-full rounded-xl py-3 px-4 text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
               >
                 Add to Library
               </button>
@@ -198,7 +198,7 @@ export default async function BookPage({ params }: { params: { slug: string } })
             <div className="mb-6">
               <p
                 className="text-xs uppercase tracking-widest mb-2"
-                style={{ color: "var(--accent-gold)" }}
+                style={{ color: "var(--accent-gold-text)" }}
               >
                 Book
               </p>
@@ -293,7 +293,7 @@ export default async function BookPage({ params }: { params: { slug: string } })
                         {ed.isPublicDomain && (
                           <span
                             className="rounded-full px-2 py-0.5"
-                            style={{ backgroundColor: "var(--accent-primary)", color: "#fff" }}
+                            style={{ backgroundColor: "var(--accent-primary)", color: "var(--on-accent-primary)" }}
                           >
                             Public Domain
                           </span>
@@ -375,7 +375,7 @@ export default async function BookPage({ params }: { params: { slug: string } })
                     >
                       <Quote
                         className="h-4 w-4 mb-2"
-                        style={{ color: "var(--accent-gold)" }}
+                        style={{ color: "var(--accent-gold-text)" }}
                       />
                       <blockquote
                         className="text-lg italic leading-relaxed"

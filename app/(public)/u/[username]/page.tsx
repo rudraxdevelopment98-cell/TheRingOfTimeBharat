@@ -37,7 +37,7 @@ export default function UserProfilePage({ params }: { params: { username: string
               className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full"
               style={{ backgroundColor: "var(--accent-primary)" }}
             >
-              <User className="h-10 w-10 text-white" />
+              <User className="h-10 w-10" style={{ color: "var(--on-accent-primary)" }} />
             </div>
 
             <div className="flex-1 min-w-0">
@@ -61,8 +61,8 @@ export default function UserProfilePage({ params }: { params: { username: string
             </div>
 
             <button
-              className="flex-shrink-0 rounded-full px-5 py-2 text-sm font-medium text-white"
-              style={{ backgroundColor: "var(--accent-primary)" }}
+              className="flex-shrink-0 rounded-full px-5 py-2 text-sm font-medium"
+              style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
             >
               Follow
             </button>

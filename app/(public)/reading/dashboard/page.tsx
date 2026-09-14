@@ -56,7 +56,7 @@ export default function ReadingDashboardPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-3">
             <BookMarked className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
               My Library
             </p>
           </div>
@@ -163,7 +163,7 @@ export default function ReadingDashboardPage() {
               style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
             >
               <div className="flex items-center gap-2 mb-5">
-                <Target className="h-5 w-5" style={{ color: "var(--accent-gold)" }} />
+                <Target className="h-5 w-5" style={{ color: "var(--accent-gold-text)" }} />
                 <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
                   Goal: {challengeGoal} books
                 </span>
@@ -263,7 +263,7 @@ export default function ReadingDashboardPage() {
               className="group block rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1"
               style={{ backgroundColor: "var(--bg-elevated)", borderColor: "var(--accent-gold)" }}
             >
-              <Library className="h-7 w-7 mb-4" style={{ color: "var(--accent-gold)" }} />
+              <Library className="h-7 w-7 mb-4" style={{ color: "var(--accent-gold-text)" }} />
               <h3
                 className="text-2xl font-medium mb-2"
                 style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
@@ -275,7 +275,7 @@ export default function ReadingDashboardPage() {
               </p>
               <span
                 className="inline-flex items-center gap-2 text-sm font-medium transition-transform group-hover:gap-3"
-                style={{ color: "var(--accent-gold)" }}
+                style={{ color: "var(--accent-gold-text)" }}
               >
                 See your 2025 Reading Wrapped
                 <ArrowRight className="h-4 w-4" />

@@ -37,7 +37,7 @@ export function AdminSubNav({ links }: AdminSubNavProps) {
                   isActive
                     ? {
                         backgroundColor: "var(--accent-primary)",
-                        color: "#ffffff",
+                        color: "var(--on-accent-primary)",
                       }
                     : {
                         backgroundColor: "var(--bg-surface)",

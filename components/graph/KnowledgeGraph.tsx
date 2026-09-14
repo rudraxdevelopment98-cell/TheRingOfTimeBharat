@@ -44,11 +44,12 @@ interface SimLink {
   relation: string;
 }
 
-// Colors that are NOT derived from CSS variables (fixed per spec).
-const FIXED_TYPE_COLORS: Partial<Record<GraphNodeType, string>> = {
-  MOVEMENT: "#7c3aed",
-  EVENT: "#b5338a",
-  PLACE: "#4a6fa5",
+// Category colours are theme-aware tokens; these hexes are only the fallback
+// used if the custom property cannot be read (they match the light theme).
+const CATEGORY_TOKENS: Partial<Record<GraphNodeType, [string, string]>> = {
+  MOVEMENT: ["--category-purple", "#6b3fa0"],
+  EVENT: ["--category-magenta", "#a52d7e"],
+  PLACE: ["--category-blue", "#3a5f92"],
 };
 
 interface ThemeColors {
@@ -58,19 +59,25 @@ interface ThemeColors {
   accentPrimary: string;
   accentSecondary: string;
   accentGold: string;
+  categories: Partial<Record<GraphNodeType, string>>;
 }
 
 function readThemeColors(): ThemeColors {
   const cs = getComputedStyle(document.documentElement);
   const v = (name: string, fallback: string) =>
     cs.getPropertyValue(name).trim() || fallback;
+  const categories: Partial<Record<GraphNodeType, string>> = {};
+  for (const [type, [token, fallback]] of Object.entries(CATEGORY_TOKENS)) {
+    categories[type as GraphNodeType] = v(token, fallback);
+  }
   return {
     border: v("--border", "#d4c9b0"),
     textPrimary: v("--text-primary", "#1a1208"),
-    textFaint: v("--text-faint", "#a8957a"),
+    textFaint: v("--text-faint", "#877052"),
     accentPrimary: v("--accent-primary", "#8b4513"),
     accentSecondary: v("--accent-secondary", "#2c5f2e"),
     accentGold: v("--accent-gold", "#c9a84c"),
+    categories,
   };
 }
 
@@ -83,7 +90,7 @@ function colorForType(type: GraphNodeType, theme: ThemeColors): string {
     case "CONCEPT":
       return theme.accentSecondary;
     default:
-      return FIXED_TYPE_COLORS[type] ?? theme.accentPrimary;
+      return theme.categories[type] ?? theme.accentPrimary;
   }
 }
 

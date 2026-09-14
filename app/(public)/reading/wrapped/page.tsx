@@ -16,7 +16,7 @@ const TOP_BOOKS = [
 ];
 
 const ERAS = [
-  { label: "Antiquity", pct: 14, color: "var(--accent-gold)" },
+  { label: "Antiquity", pct: 14, color: "var(--accent-gold-text)" },
   { label: "Medieval & Renaissance", pct: 11, color: "var(--accent-secondary)" },
   { label: "19th Century", pct: 38, color: "var(--accent-primary)" },
   { label: "20th Century", pct: 27, color: "var(--text-faint)" },
@@ -36,11 +36,11 @@ export default function ReadingWrappedPage() {
       <section className="border-b py-20" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-surface)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-5 flex items-center justify-center gap-3">
-            <Sparkles className="h-6 w-6" style={{ color: "var(--accent-gold)" }} />
-            <p className="text-xs uppercase tracking-[0.3em] font-medium" style={{ color: "var(--accent-gold)" }}>
+            <Sparkles className="h-6 w-6" style={{ color: "var(--accent-gold-text)" }} />
+            <p className="text-xs uppercase tracking-[0.3em] font-medium" style={{ color: "var(--accent-gold-text)" }}>
               Your 2025 Reading Wrapped
             </p>
-            <Sparkles className="h-6 w-6" style={{ color: "var(--accent-gold)" }} />
+            <Sparkles className="h-6 w-6" style={{ color: "var(--accent-gold-text)" }} />
           </div>
           <h1
             className="mx-auto max-w-3xl text-5xl md:text-6xl font-light leading-tight"
@@ -86,7 +86,7 @@ export default function ReadingWrappedPage() {
       {/* Reading personality */}
       <section className="py-20" style={{ backgroundColor: "var(--bg-surface)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="mb-3 text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+          <p className="mb-3 text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
             Your reading personality
           </p>
           <h2
@@ -117,7 +117,7 @@ export default function ReadingWrappedPage() {
                   className="rounded-2xl border p-8 text-center"
                   style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
                 >
-                  <Icon className="mx-auto mb-4 h-6 w-6" style={{ color: "var(--accent-gold)" }} />
+                  <Icon className="mx-auto mb-4 h-6 w-6" style={{ color: "var(--accent-gold-text)" }} />
                   <div className="mb-2 text-xs uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>
                     {s.label}
                   </div>
@@ -169,7 +169,7 @@ export default function ReadingWrappedPage() {
       <section className="py-20" style={{ backgroundColor: "var(--bg-surface)" }}>
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex items-center gap-3">
-            <Trophy className="h-6 w-6" style={{ color: "var(--accent-gold)" }} />
+            <Trophy className="h-6 w-6" style={{ color: "var(--accent-gold-text)" }} />
             <h2 className="text-3xl font-light" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}>
               Your top 5 books of the year
             </h2>
@@ -243,7 +243,7 @@ export default function ReadingWrappedPage() {
       {/* Closing */}
       <section className="border-t py-20" style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-surface)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <Sparkles className="mx-auto mb-5 h-7 w-7" style={{ color: "var(--accent-gold)" }} />
+          <Sparkles className="mx-auto mb-5 h-7 w-7" style={{ color: "var(--accent-gold-text)" }} />
           <h2
             className="mx-auto max-w-2xl text-4xl font-light"
             style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
@@ -252,8 +252,8 @@ export default function ReadingWrappedPage() {
           </h2>
           <Link
             href="/reading/dashboard"
-            className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-white"
-            style={{ backgroundColor: "var(--accent-primary)" }}
+            className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
+            style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
           >
             Back to your dashboard
           </Link>

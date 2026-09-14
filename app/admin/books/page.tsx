@@ -25,10 +25,10 @@ export default function AdminBooksPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <BookOpen className="h-5 w-5" style={{ color: "var(--accent-gold)" }} />
+              <BookOpen className="h-5 w-5" style={{ color: "var(--accent-gold-text)" }} />
               <span
                 className="text-xs font-semibold uppercase tracking-widest"
-                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+                style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
               >
                 Admin
               </span>
@@ -45,7 +45,7 @@ export default function AdminBooksPage() {
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium"
             style={{
               backgroundColor: "var(--accent-primary)",
-              color: "#ffffff",
+              color: "var(--on-accent-primary)",
               fontFamily: "var(--font-dm-sans)",
             }}
           >
@@ -125,7 +125,7 @@ export default function AdminBooksPage() {
               </div>
               <div
                 className="text-sm font-semibold"
-                style={{ color: "var(--accent-gold)" }}
+                style={{ color: "var(--accent-gold-text)" }}
               >
                 {book.rating}
               </div>
@@ -141,7 +141,7 @@ export default function AdminBooksPage() {
                 </button>
                 <button
                   className="p-1.5 rounded-lg transition-opacity hover:opacity-70"
-                  style={{ backgroundColor: "var(--bg-elevated)", color: "#e05252" }}
+                  style={{ backgroundColor: "var(--bg-elevated)", color: "var(--danger)" }}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

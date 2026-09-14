@@ -1,4 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  exceedsSizeLimit,
+  getClientIp,
+  rateLimit,
+  sanitizeText,
+} from "@/lib/security";
+
+const MAX_BODY_BYTES = 32 * 1024;
+const MAX_TAGS = 25;
+const MAX_TAG_CHARS = 50;
 
 function slugify(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -39,8 +49,44 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const { name, description, type, isPublic, tags, theme } = body;
+  const limited = rateLimit(`collections:${getClientIp(request)}`, {
+    limit: 20,
+    windowMs: 60_000,
+  });
+  if (!limited.allowed) {
+    const retryAfter = Math.max(1, Math.ceil((limited.resetAt - Date.now()) / 1000));
+    return NextResponse.json(
+      { error: "Too many requests. Please try again in a minute." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
+  if (exceedsSizeLimit(request, MAX_BODY_BYTES)) {
+    return NextResponse.json({ error: "Request body too large." }, { status: 413 });
+  }
+
+  let raw: unknown;
+  try {
+    raw = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  const body = raw as Record<string, unknown>;
+  const { type, isPublic } = body;
+
+  const name = typeof body.name === "string" ? sanitizeText(body.name, 150) : "";
+  const description =
+    typeof body.description === "string" ? sanitizeText(body.description, 2000) : undefined;
+  const theme = typeof body.theme === "string" ? sanitizeText(body.theme, 80) : undefined;
+  const tags = Array.isArray(body.tags)
+    ? body.tags
+        .slice(0, MAX_TAGS)
+        .map((t) => (typeof t === "string" ? sanitizeText(t, MAX_TAG_CHARS) : ""))
+        .filter((t): t is string => t.length > 0)
+    : [];
 
   if (!name) return NextResponse.json({ error: "name is required" }, { status: 400 });
 
@@ -51,9 +97,9 @@ export async function POST(request: NextRequest) {
         name,
         slug: slugify(name),
         description,
-        type: type ?? "USER",
-        isPublic: isPublic ?? true,
-        tags: tags ?? [],
+        type: (type ?? "USER") as never,
+        isPublic: typeof isPublic === "boolean" ? isPublic : true,
+        tags,
         theme,
       },
     });

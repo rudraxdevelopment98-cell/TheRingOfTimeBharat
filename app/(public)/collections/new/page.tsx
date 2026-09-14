@@ -46,7 +46,7 @@ export default function NewCollectionPage() {
           </Link>
           <div className="flex items-center gap-3 mb-2">
             <Plus className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>
+            <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>
               New Collection
             </p>
           </div>
@@ -225,8 +225,8 @@ export default function NewCollectionPage() {
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="flex-1 rounded-xl py-3 px-6 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "var(--accent-primary)" }}
+                className="flex-1 rounded-xl py-3 px-6 text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
               >
                 Create Collection
               </button>

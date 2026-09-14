@@ -115,7 +115,7 @@ export default async function AuthorPage({ params }: { params: { slug: string } 
             <User className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
             <p
               className="text-xs uppercase tracking-widest font-medium"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+              style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
             >
               Author
             </p>

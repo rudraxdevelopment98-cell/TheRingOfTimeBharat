@@ -239,7 +239,7 @@ export default async function CollectionPage({ params }: { params: { slug: strin
             </div>
             <p
               className="mt-4 text-center text-xs uppercase tracking-widest"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+              style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
             >
               Featured volume
             </p>
@@ -264,7 +264,7 @@ export default async function CollectionPage({ params }: { params: { slug: strin
               <Layers className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
               <p
                 className="text-xs uppercase tracking-widest font-medium"
-                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-dm-sans)" }}
+                style={{ color: "var(--accent-gold-text)", fontFamily: "var(--font-dm-sans)" }}
               >
                 Collection
               </p>
@@ -289,8 +289,8 @@ export default async function CollectionPage({ params }: { params: { slug: strin
                 value={`${collectionMeta.followers.toLocaleString()} followers`}
               />
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium text-white"
-                style={{ backgroundColor: "var(--accent-secondary)", fontFamily: "var(--font-dm-sans)" }}
+                className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium"
+                style={{ color: "var(--on-accent-secondary)", backgroundColor: "var(--accent-secondary)", fontFamily: "var(--font-dm-sans)" }}
               >
                 <Bookmark className="h-3.5 w-3.5" />
                 Official Collection

@@ -167,7 +167,7 @@ export function AIChatWindow({
                 border: "1px solid var(--border)",
               }}
             >
-              <BookOpen className="h-7 w-7" style={{ color: "var(--accent-gold)" }} />
+              <BookOpen className="h-7 w-7" style={{ color: "var(--accent-gold-text)" }} />
             </div>
             <h3
               className="mb-2 text-2xl font-light"
@@ -214,8 +214,8 @@ export function AIChatWindow({
               m.role === "user" ? (
                 <div key={i} className="flex justify-end">
                   <div
-                    className="max-w-[85%] rounded-2xl rounded-br-md px-4 py-3 text-sm text-white"
-                    style={{
+                    className="max-w-[85%] rounded-2xl rounded-br-md px-4 py-3 text-sm"
+                    style={{ color: "var(--on-accent-primary)",
                       backgroundColor: "var(--accent-primary)",
                       fontFamily: "var(--font-dm-sans)",
                     }}
@@ -230,7 +230,7 @@ export function AIChatWindow({
                   <div className="mb-1.5 flex items-center gap-1.5 pl-1">
                     <Sparkles
                       className="h-3.5 w-3.5"
-                      style={{ color: "var(--accent-gold)" }}
+                      style={{ color: "var(--accent-gold-text)" }}
                     />
                     <span
                       className="text-xs uppercase tracking-widest"
@@ -300,8 +300,8 @@ export function AIChatWindow({
             type="submit"
             disabled={streaming || !input.trim()}
             aria-label="Send message"
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ backgroundColor: "var(--accent-primary)" }}
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
           >
             {streaming ? (
               <Loader2 className="h-4 w-4 animate-spin" />

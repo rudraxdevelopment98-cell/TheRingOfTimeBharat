@@ -7,7 +7,7 @@ const COLLECTIONS = [
     theme: "Award Winners",
     count: 120,
     slug: "nobel-prize-literature",
-    color: "#c9a84c",
+    color: "var(--accent-gold-text)",
     emoji: "🏆",
   },
   {
@@ -15,7 +15,7 @@ const COLLECTIONS = [
     theme: "Before 500 AD",
     count: 340,
     slug: "ancient-sacred-texts",
-    color: "#8b4513",
+    color: "var(--accent-primary-text)",
     emoji: "📜",
   },
   {
@@ -23,7 +23,7 @@ const COLLECTIONS = [
     theme: "2,500 years of thought",
     count: 890,
     slug: "philosophy-through-ages",
-    color: "#2c5f2e",
+    color: "var(--accent-secondary-text)",
     emoji: "⚖️",
   },
   {
@@ -31,7 +31,7 @@ const COLLECTIONS = [
     theme: "Civilisation-defining works",
     count: 100,
     slug: "100-books-changed-history",
-    color: "#6b3fa0",
+    color: "var(--category-purple)",
     emoji: "🌍",
   },
   {
@@ -39,7 +39,7 @@ const COLLECTIONS = [
     theme: "Across Centuries",
     count: 650,
     slug: "african-literature",
-    color: "#c4622d",
+    color: "var(--category-terracotta)",
     emoji: "🌺",
   },
   {
@@ -47,7 +47,7 @@ const COLLECTIONS = [
     theme: "A Century of Voices",
     count: 420,
     slug: "feminist-literature",
-    color: "#b5338a",
+    color: "var(--category-magenta)",
     emoji: "✊",
   },
 ];
@@ -60,7 +60,7 @@ export function FeaturedCollections() {
           <div>
             <p
               className="text-xs uppercase tracking-widest mb-2 font-medium"
-              style={{ color: "var(--accent-gold)" }}
+              style={{ color: "var(--accent-gold-text)" }}
             >
               Curated Collections
             </p>

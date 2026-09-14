@@ -124,7 +124,7 @@ export default function QuotesPage() {
             <Quote className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
             <p
               className="text-xs uppercase tracking-widest font-medium"
-              style={{ color: "var(--accent-gold)" }}
+              style={{ color: "var(--accent-gold-text)" }}
             >
               The Commonplace Book
             </p>
@@ -164,7 +164,7 @@ export default function QuotesPage() {
                   ? {
                       backgroundColor: "var(--accent-primary)",
                       borderColor: "var(--accent-primary)",
-                      color: "#fff",
+                      color: "var(--on-accent-primary)",
                       fontFamily: "var(--font-dm-sans)",
                     }
                   : {
@@ -191,7 +191,7 @@ export default function QuotesPage() {
             >
               <span
                 className="block text-5xl leading-none"
-                style={{ fontFamily: "var(--font-cormorant)", color: "var(--accent-gold)" }}
+                style={{ fontFamily: "var(--font-cormorant)", color: "var(--accent-gold-text)" }}
                 aria-hidden
               >
                 &ldquo;

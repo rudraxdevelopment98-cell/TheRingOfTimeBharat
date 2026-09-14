@@ -18,11 +18,11 @@ export default function AdminAuthorsPage() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <User className="h-5 w-5" style={{ color: "var(--accent-primary)" }} />
-              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold)" }}>Admin</p>
+              <p className="text-xs uppercase tracking-widest font-medium" style={{ color: "var(--accent-gold-text)" }}>Admin</p>
             </div>
             <h1 className="text-4xl font-light" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}>Authors</h1>
           </div>
-          <button className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-primary)" }}>
+          <button className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium" style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}>
             <Plus className="h-4 w-4" /> Add Author
           </button>
         </div>
@@ -45,7 +45,7 @@ export default function AdminAuthorsPage() {
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: "var(--accent-primary)" }}>
-                  <User className="h-5 w-5 text-white" />
+                  <User className="h-5 w-5" style={{ color: "var(--on-accent-primary)" }} />
                 </div>
                 <div>
                   <Link href={`/author/${author.slug}`} className="font-medium hover:opacity-80" style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)", fontSize: "1.05rem" }}>
@@ -55,7 +55,7 @@ export default function AdminAuthorsPage() {
                     <span className="text-xs" style={{ color: "var(--text-faint)" }}>{author.nationality}</span>
                     <span className="text-xs" style={{ color: "var(--text-faint)" }}>{author.born < 0 ? `${Math.abs(author.born)} BC` : author.born} – {author.died}</span>
                     <span className="text-xs" style={{ color: "var(--text-faint)" }}>{author.works} works</span>
-                    <span className="text-xs" style={{ color: "var(--accent-gold)" }}>★ {author.rating}</span>
+                    <span className="text-xs" style={{ color: "var(--accent-gold-text)" }}>★ {author.rating}</span>
                   </div>
                 </div>
               </div>

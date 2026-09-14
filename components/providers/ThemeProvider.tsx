@@ -20,15 +20,30 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) setThemeState(stored);
+    if (stored === "light" || stored === "dark" || stored === "system") {
+      setThemeState(stored);
+    }
   }, []);
 
   useEffect(() => {
     const root = document.documentElement;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const resolved = theme === "system" ? (prefersDark ? "dark" : "light") : theme;
-    setResolvedTheme(resolved);
-    root.classList.toggle("dark", resolved === "dark");
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const apply = () => {
+      const resolved: "light" | "dark" =
+        theme === "system" ? (mql.matches ? "dark" : "light") : theme;
+      setResolvedTheme(resolved);
+      // Both classes are set explicitly so an explicit choice always beats the
+      // `@media (prefers-color-scheme: dark)` fallback in globals.css.
+      root.classList.toggle("dark", resolved === "dark");
+      root.classList.toggle("light", resolved === "light");
+    };
+
+    apply();
+
+    if (theme !== "system") return;
+    mql.addEventListener("change", apply);
+    return () => mql.removeEventListener("change", apply);
   }, [theme]);
 
   const setTheme = (t: Theme) => {

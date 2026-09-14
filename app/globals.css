@@ -4,37 +4,192 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@400;500&display=swap');
 
+/* ---------------------------------------------------------------------------
+   Theme tokens
+   ---------------------------------------------------------------------------
+   Cascade order matters. Later rules of equal specificity win, so:
+     1. :root                                   -> light defaults (also SSR)
+     2. @media (prefers-color-scheme: dark)
+          :root:not(.light)                     -> system dark, first paint
+     3. .dark                                   -> explicit dark always wins
+     4. .light                                  -> explicit light always wins
+   `.dark` / `.light` are set on <html> by the anti-FOUC script in app/layout
+   and kept in sync by components/providers/ThemeProvider.
+--------------------------------------------------------------------------- */
+
 :root {
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
   --font-source-serif: 'Source Serif 4', Georgia, serif;
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-fira-code: 'Fira Code', monospace;
   --radius: 0.5rem;
+}
 
-  /* Light mode (parchment) */
+/* Light mode (parchment) — the default, and what SSR/first paint renders. */
+:root {
+  color-scheme: light;
+
   --bg-base: #faf7f2;
   --bg-surface: #f5f0e8;
   --bg-elevated: #ffffff;
   --border: #d4c9b0;
+
   --accent-primary: #8b4513;
   --accent-secondary: #2c5f2e;
   --accent-gold: #c9a84c;
+
+  /* Readable text colours ON the accent backgrounds above */
+  --on-accent-primary: #ffffff;
+  --on-accent-secondary: #ffffff;
+  --on-accent-gold: #1a1208;
+
+  /* Accent used AS text on bg-base/bg-surface. Gold is too light in light
+     mode to be legible, so it gets a darkened variant. */
+  --accent-primary-text: #7a3c10;
+  --accent-secondary-text: #245025;
+  --accent-gold-text: #7d6212;
+
   --text-primary: #1a1208;
   --text-muted: #6b5c42;
-  --text-faint: #a8957a;
+  --text-faint: #877052;
+
+  --danger: #b3261e;
+  --on-danger: #ffffff;
+  --success: #2c5f2e;
+  --warning: #8a5a06;
+  --info: #1a4f8a;
+
+  --category-purple: #6b3fa0;
+  --category-magenta: #a52d7e;
+  --category-blue: #3a5f92;
+  --category-terracotta: #a8481f;
+
+  --selection-bg: rgba(201, 168, 76, 0.4);
+  --selection-fg: #1a1208;
 }
 
-.dark {
+/* System dark, before JS runs. An explicit `.light` opts out. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+
+    --bg-base: #0d0e14;
+    --bg-surface: #13141c;
+    --bg-elevated: #1a1c28;
+    --border: #2a2d3e;
+
+    --accent-primary: #d4955a;
+    --accent-secondary: #4a9e6b;
+    --accent-gold: #e8c96a;
+
+    --on-accent-primary: #1a1208;
+    --on-accent-secondary: #06140c;
+    --on-accent-gold: #1a1208;
+
+    --accent-primary-text: #e2a878;
+    --accent-secondary-text: #6dbb8a;
+    --accent-gold-text: #e8c96a;
+
+    --text-primary: #f0ead8;
+    --text-muted: #a9a2b8;
+    --text-faint: #7d7796;
+
+    --danger: #f0736b;
+    --on-danger: #1a0a08;
+    --success: #6dbb8a;
+    --warning: #e6b455;
+    --info: #82b4e8;
+
+    --category-purple: #b795ea;
+    --category-magenta: #ef8ac9;
+    --category-blue: #86b2e8;
+    --category-terracotta: #e59268;
+
+    --selection-bg: rgba(232, 201, 106, 0.35);
+    --selection-fg: #f0ead8;
+  }
+}
+
+/* Explicit dark. `:root.dark` matches the (0,2,0) specificity of
+   `:root:not(.light)` above and comes later, so it always wins. */
+:root.dark {
+  color-scheme: dark;
+
   --bg-base: #0d0e14;
   --bg-surface: #13141c;
   --bg-elevated: #1a1c28;
   --border: #2a2d3e;
+
   --accent-primary: #d4955a;
   --accent-secondary: #4a9e6b;
   --accent-gold: #e8c96a;
+
+  --on-accent-primary: #1a1208;
+  --on-accent-secondary: #06140c;
+  --on-accent-gold: #1a1208;
+
+  --accent-primary-text: #e2a878;
+  --accent-secondary-text: #6dbb8a;
+  --accent-gold-text: #e8c96a;
+
   --text-primary: #f0ead8;
-  --text-muted: #8a8299;
-  --text-faint: #4a4660;
+  --text-muted: #a9a2b8;
+  --text-faint: #7d7796;
+
+  --danger: #f0736b;
+  --on-danger: #1a0a08;
+  --success: #6dbb8a;
+  --warning: #e6b455;
+  --info: #82b4e8;
+
+  --category-purple: #b795ea;
+  --category-magenta: #ef8ac9;
+  --category-blue: #86b2e8;
+  --category-terracotta: #e59268;
+
+  --selection-bg: rgba(232, 201, 106, 0.35);
+  --selection-fg: #f0ead8;
+}
+
+/* Explicit light — declared last so it beats the prefers-color-scheme block
+   for a user on a dark system who has chosen the light theme. */
+:root.light {
+  color-scheme: light;
+
+  --bg-base: #faf7f2;
+  --bg-surface: #f5f0e8;
+  --bg-elevated: #ffffff;
+  --border: #d4c9b0;
+
+  --accent-primary: #8b4513;
+  --accent-secondary: #2c5f2e;
+  --accent-gold: #c9a84c;
+
+  --on-accent-primary: #ffffff;
+  --on-accent-secondary: #ffffff;
+  --on-accent-gold: #1a1208;
+
+  --accent-primary-text: #7a3c10;
+  --accent-secondary-text: #245025;
+  --accent-gold-text: #7d6212;
+
+  --text-primary: #1a1208;
+  --text-muted: #6b5c42;
+  --text-faint: #877052;
+
+  --danger: #b3261e;
+  --on-danger: #ffffff;
+  --success: #2c5f2e;
+  --warning: #8a5a06;
+  --info: #1a4f8a;
+
+  --category-purple: #6b3fa0;
+  --category-magenta: #a52d7e;
+  --category-blue: #3a5f92;
+  --category-terracotta: #a8481f;
+
+  --selection-bg: rgba(201, 168, 76, 0.4);
+  --selection-fg: #1a1208;
 }
 
 * {
@@ -56,8 +211,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Paper grain texture for light mode */
-body:not(.dark)::before {
+/* Paper grain texture for light mode only.
+   The theme class lives on <html>, not <body>, so this must be scoped to
+   html:not(.dark) — the old `body:not(.dark)` was always true and leaked the
+   grain overlay into dark mode. */
+html:not(.dark) body::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -67,11 +225,21 @@ body:not(.dark)::before {
   opacity: 0.3;
 }
 
+/* …and suppress it when the system is dark and no explicit theme is set. */
+@media (prefers-color-scheme: dark) {
+  html:not(.light) body::before { content: none; }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-surface); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
 
-/* Selection */
-::selection { background: var(--accent-gold); color: var(--text-primary); opacity: 0.3; }
+/* Selection.
+   `opacity` has no effect on ::selection, so the old rule painted a fully
+   opaque gold block. Use a pre-blended translucent background instead. */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}

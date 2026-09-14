@@ -67,7 +67,7 @@ export default function SearchPage() {
                 autoFocus
               />
               {query && (
-                <button type="submit" className="rounded-lg px-3 py-1 text-sm font-medium text-white" style={{ backgroundColor: "var(--accent-primary)" }}>
+                <button type="submit" className="rounded-lg px-3 py-1 text-sm font-medium" style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}>
                   Search
                 </button>
               )}
@@ -163,7 +163,7 @@ export default function SearchPage() {
                   {results.authors.map((author) => (
                     <Link key={author.id} href={`/author/${author.slug}`} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all hover:shadow-sm" style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)", color: "var(--text-primary)" }}>
                       <div className="flex h-6 w-6 items-center justify-center rounded-full" style={{ backgroundColor: "var(--accent-primary)" }}>
-                        <User className="h-3 w-3 text-white" />
+                        <User className="h-3 w-3" style={{ color: "var(--on-accent-primary)" }} />
                       </div>
                       <span style={{ fontFamily: "var(--font-cormorant)" }}>{author.name}</span>
                       {author.nationality && <span style={{ color: "var(--text-faint)", fontSize: "0.75rem" }}>{author.nationality}</span>}
