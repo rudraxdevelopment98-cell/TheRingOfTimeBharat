@@ -5,6 +5,7 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import UserMenu from "@/components/auth/UserMenu";
 
 const NAV_ITEMS = [
   { href: "/explore", key: "nav.explore" },
@@ -93,6 +94,8 @@ export function Navbar() {
               <Library className="h-3.5 w-3.5" />
               {t("nav.myLibrary")}
             </Link>
+
+            <UserMenu />
 
             <button
               className="md:hidden flex h-9 w-9 items-center justify-center"

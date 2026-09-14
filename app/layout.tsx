@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
+import AuthProvider from "@/components/providers/AuthProvider";
+import AdSenseScript from "@/components/ads/AdSenseScript";
 
 export const metadata: Metadata = {
   title: {
@@ -37,9 +39,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <ThemeProvider>
-          <I18nProvider>{children}</I18nProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <I18nProvider>{children}</I18nProvider>
+          </ThemeProvider>
+        </AuthProvider>
+        <AdSenseScript />
       </body>
     </html>
   );

@@ -123,7 +123,7 @@ export function DiscoveryFeed() {
             style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
           >
             <BookOpen className="h-4 w-4" />
-            Explore all 2.5 million books
+            {t("home.exploreAllBooks")}
           </Link>
         </div>
       </div>

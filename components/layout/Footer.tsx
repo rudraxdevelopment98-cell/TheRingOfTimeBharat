@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer
       className="mt-auto border-t"
@@ -25,26 +29,26 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "var(--text-faint)" }}>
-              All the world's knowledge, between two covers.
+              {t("home.heroTitleA")} {t("home.heroTitleAccent")}, {t("home.heroTitleB")}
             </p>
           </div>
 
           {[
             {
-              title: "Discover",
+              title: t("explore.eyebrow"),
               links: [
-                { href: "/explore", label: "Explore Books" },
-                { href: "/collections", label: "Collections" },
-                { href: "/languages", label: "Languages" },
-                { href: "/graph", label: "Knowledge Graph" },
+                { href: "/explore", label: t("nav.explore") },
+                { href: "/collections", label: t("nav.collections") },
+                { href: "/languages", label: t("nav.languages") },
+                { href: "/graph", label: t("nav.knowledgeGraph") },
               ],
             },
             {
               title: "Community",
               links: [
-                { href: "/quotes", label: "Quotes" },
-                { href: "/reading/dashboard", label: "My Library" },
-                { href: "/lists", label: "Reading Lists" },
+                { href: "/quotes", label: t("quotes.eyebrow") },
+                { href: "/reading/dashboard", label: t("nav.myLibrary") },
+                { href: "/contact", label: t("nav.contact") },
               ],
             },
             {

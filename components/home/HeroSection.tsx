@@ -106,7 +106,7 @@ export function HeroSection() {
                 className="flex-shrink-0 rounded-xl px-4 py-1.5 text-sm font-medium transition-opacity hover:opacity-90"
                 style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
               >
-                Search
+                {t("home.searchButton")}
               </button>
             </div>
           </form>
@@ -117,7 +117,7 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all hover:opacity-90 hover:scale-105"
               style={{ color: "var(--on-accent-primary)", backgroundColor: "var(--accent-primary)" }}
             >
-              Start Exploring
+              {t("home.startExploring")}
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
