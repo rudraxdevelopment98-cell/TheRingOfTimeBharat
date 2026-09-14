@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Search, Sparkles, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const SCROLLING_BOOKS = [
   "Don Quixote", "War and Peace", "Mahabharata", "One Hundred Years of Solitude",
@@ -14,6 +15,7 @@ const SCROLLING_BOOKS = [
 ];
 
 export function HeroSection() {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -47,7 +49,7 @@ export function HeroSection() {
             }}
           >
             <Sparkles className="h-3 w-3" style={{ color: "var(--accent-gold-text)" }} />
-            A digital Library of Alexandria
+            {t("home.heroEyebrow")}
           </div>
 
           <h1
@@ -58,15 +60,15 @@ export function HeroSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            All the world&apos;s{" "}
+            {t("home.heroTitleA")}{" "}
             <em
               className="italic font-normal"
               style={{ color: "var(--accent-primary)" }}
             >
-              knowledge
+              {t("home.heroTitleAccent")}
             </em>
             ,<br />
-            between two covers.
+            {t("home.heroTitleB")}
           </h1>
 
           <p
@@ -76,8 +78,7 @@ export function HeroSection() {
               color: "var(--text-muted)",
             }}
           >
-            Every book. Every language. Every era. Explore the interconnected web of
-            human thought across civilisations — and discover your next great read.
+            {t("home.heroSubtitle")}
           </p>
 
           <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-10">
@@ -93,7 +94,7 @@ export function HeroSection() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
-                placeholder="Search books, authors, quotes, eras…"
+                placeholder={t("home.searchPlaceholder")}
                 className="flex-1 bg-transparent text-sm outline-none placeholder:opacity-60"
                 style={{
                   color: "var(--text-primary)",
@@ -128,7 +129,7 @@ export function HeroSection() {
                 backgroundColor: "var(--bg-elevated)",
               }}
             >
-              Browse Collections
+              {t("home.browseCollections")}
             </Link>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Quote, Heart, Link2, Share2, BookOpen, ArrowLeft } from "lucide-react";
+import { TranslatableText } from "@/components/i18n/TranslatableText";
 
 interface QuoteRecord {
   text: string;
@@ -63,12 +64,14 @@ export default function QuotePage({ params }: { params: { id: string } }) {
           style={{ color: "var(--accent-gold-text)" }}
           aria-hidden
         />
-        <blockquote
-          className="mx-auto max-w-3xl text-3xl md:text-4xl font-light italic leading-snug"
-          style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
-        >
-          &ldquo;{quote.text}&rdquo;
-        </blockquote>
+        <div className="mx-auto max-w-3xl">
+          <TranslatableText
+            as="div"
+            text={`“${quote.text}”`}
+            className="text-3xl md:text-4xl font-light italic leading-snug"
+            style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
+          />
+        </div>
 
         <div className="mt-10">
           <p
@@ -156,12 +159,11 @@ export default function QuotePage({ params }: { params: { id: string } }) {
                 className="group block rounded-2xl border p-6 transition-all hover:-translate-y-0.5 hover:shadow-md"
                 style={{ backgroundColor: "var(--bg-base)", borderColor: "var(--border)" }}
               >
-                <p
+                <TranslatableText
+                  text={`“${r.text}”`}
                   className="text-lg italic leading-relaxed transition-opacity group-hover:opacity-90"
                   style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
-                >
-                  &ldquo;{r.text}&rdquo;
-                </p>
+                />
                 <p
                   className="mt-3 text-xs uppercase tracking-widest"
                   style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}

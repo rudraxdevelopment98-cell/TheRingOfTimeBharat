@@ -1,5 +1,6 @@
 import { Compass, Filter } from "lucide-react";
 import Link from "next/link";
+import AdSlot from "@/components/ads/AdSlot";
 
 const GENRES = [
   { name: "Philosophy", count: "12,400", icon: "⚖️", slug: "philosophy" },
@@ -93,6 +94,8 @@ export default function ExplorePage() {
             ))}
           </div>
         </section>
+
+        <AdSlot slot="explore-mid" format="horizontal" className="mb-14" />
 
         <section className="mb-14">
           <h2

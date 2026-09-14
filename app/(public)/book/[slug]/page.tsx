@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { BookOpen, Star, Globe, Calendar, Clock, Users, Quote } from "lucide-react";
+import AdSlot from "@/components/ads/AdSlot";
+import DownloadGate from "@/components/book/DownloadGate";
+import { getBookPrice } from "@/lib/pricing";
+import { TranslatableText } from "@/components/i18n/TranslatableText";
 
 interface PlaceholderBook {
+  id: string;
   title: string;
+  priceCents: number;
+  isDownloadable: boolean;
   yearPublished: number | null;
   yearWritten: number | null;
   originalLanguage: string | null;
@@ -35,7 +42,10 @@ interface PlaceholderBook {
 }
 
 const PLACEHOLDER_BOOK: PlaceholderBook = {
+  id: "",
   title: "",
+  priceCents: 0,
+  isDownloadable: false,
   yearPublished: null,
   yearWritten: null,
   originalLanguage: null,
@@ -150,6 +160,15 @@ export default async function BookPage({ params }: { params: { slug: string } })
               </button>
             </div>
 
+            {book.id && (
+              <DownloadGate
+                bookId={book.id}
+                bookTitle={displayTitle}
+                priceCents={getBookPrice(book)}
+                isDownloadable={book.isDownloadable}
+              />
+            )}
+
             <div
               className="mt-6 rounded-xl border p-4 space-y-3"
               style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border)" }}
@@ -227,12 +246,11 @@ export default async function BookPage({ params }: { params: { slug: string } })
                 >
                   Summary
                 </h2>
-                <p
+                <TranslatableText
+                  text={summary}
                   className="text-base leading-relaxed"
                   style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
-                >
-                  {summary}
-                </p>
+                />
               </div>
             )}
 
@@ -356,6 +374,8 @@ export default async function BookPage({ params }: { params: { slug: string } })
                 </div>
               )}
             </div>
+
+            <AdSlot slot="book-detail" format="rectangle" className="mt-6" />
 
             {/* Quotes section */}
             {book.quotes.length > 0 && (

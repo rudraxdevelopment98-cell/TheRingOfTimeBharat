@@ -1,6 +1,6 @@
 "use client";
 import { Search, BookOpen, User, Quote, Layers, Loader2 } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -11,7 +11,7 @@ type SearchResult = {
   query: string;
 };
 
-export default function SearchPage() {
+function SearchPageInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialQ = searchParams.get("q") ?? "";
@@ -199,5 +199,27 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// useSearchParams() must sit inside a Suspense boundary or Next bails out of
+// static rendering for this route at build time.
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="flex items-center justify-center"
+          style={{ backgroundColor: "var(--bg-base)", minHeight: "100vh" }}
+        >
+          <Loader2
+            className="h-8 w-8 animate-spin"
+            style={{ color: "var(--accent-primary)" }}
+          />
+        </div>
+      }
+    >
+      <SearchPageInner />
+    </Suspense>
   );
 }

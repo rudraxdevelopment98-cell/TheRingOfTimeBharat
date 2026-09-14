@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Quote, Heart, Filter, BookOpen } from "lucide-react";
+import AdSlot from "@/components/ads/AdSlot";
+import { TranslatableText } from "@/components/i18n/TranslatableText";
 
 interface QuoteItem {
   text: string;
@@ -180,6 +182,8 @@ export default function QuotesPage() {
           ))}
         </div>
 
+        <AdSlot slot="quotes-top" format="horizontal" className="mb-10" />
+
         {/* Masonry grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
           {QUOTES.map((q, i) => (
@@ -196,12 +200,11 @@ export default function QuotesPage() {
               >
                 &ldquo;
               </span>
-              <p
+              <TranslatableText
+                text={q.text}
                 className="-mt-3 text-lg italic leading-relaxed transition-opacity group-hover:opacity-90"
                 style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
-              >
-                {q.text}
-              </p>
+              />
 
               <div className="my-5 h-px w-full" style={{ backgroundColor: "var(--border)" }} />
 

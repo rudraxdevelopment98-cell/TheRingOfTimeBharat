@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Layers, Users, BookOpen, ArrowRight, Bookmark, ChevronRight } from "lucide-react";
+import { TranslatableText } from "@/components/i18n/TranslatableText";
 
 interface Book {
   title: string;
@@ -275,12 +276,13 @@ export default async function CollectionPage({ params }: { params: { slug: strin
             >
               {collectionName}
             </h1>
-            <p
-              className="text-lg max-w-2xl mb-7"
-              style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
-            >
-              {collectionMeta.description}
-            </p>
+            <div className="max-w-2xl mb-7">
+              <TranslatableText
+                text={collectionMeta.description}
+                className="text-lg"
+                style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
+              />
+            </div>
 
             <div className="flex flex-wrap items-center gap-3 mb-8">
               <Stat icon={<BookOpen className="h-4 w-4" />} value={`${books.length} books`} />
@@ -302,12 +304,12 @@ export default async function CollectionPage({ params }: { params: { slug: strin
               className="rounded-2xl border-l-2 pl-6 pr-4 py-2"
               style={{ borderColor: "var(--accent-primary)" }}
             >
-              <blockquote
+              <TranslatableText
+                as="div"
+                text={`“${collectionMeta.curatorNote}”`}
                 className="text-lg italic leading-relaxed"
                 style={{ color: "var(--text-primary)", fontFamily: "var(--font-source-serif)" }}
-              >
-                "{collectionMeta.curatorNote}"
-              </blockquote>
+              />
               <figcaption
                 className="mt-3 text-xs uppercase tracking-widest"
                 style={{ color: "var(--text-faint)", fontFamily: "var(--font-dm-sans)" }}
@@ -364,12 +366,11 @@ export default async function CollectionPage({ params }: { params: { slug: strin
                     <Chip>{book.year}</Chip>
                     <Chip>{book.language}</Chip>
                   </div>
-                  <p
+                  <TranslatableText
+                    text={book.curatorNote}
                     className="text-sm italic"
                     style={{ color: "var(--text-faint)", fontFamily: "var(--font-source-serif)" }}
-                  >
-                    {book.curatorNote}
-                  </p>
+                  />
                 </div>
                 {i === 0 && (
                   <ArrowRight

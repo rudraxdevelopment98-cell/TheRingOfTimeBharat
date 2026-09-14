@@ -1,9 +1,11 @@
+"use client";
 import Link from "next/link";
 import { BookOpen, Globe, Clock, Flame } from "lucide-react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const DISCOVERY_SECTIONS = [
   {
-    label: "Trending Now",
+    labelKey: "home.trendingNow",
     icon: Flame,
     books: [
       { title: "Meditations", author: "Marcus Aurelius", year: "180 AD", lang: "Ancient Greek", cover: "📖" },
@@ -13,7 +15,7 @@ const DISCOVERY_SECTIONS = [
     ],
   },
   {
-    label: "Lost to Time",
+    labelKey: "home.lostToTime",
     icon: Clock,
     books: [
       { title: "Book of the Dead", author: "Ancient Egyptians", year: "1550 BC", lang: "Ancient Egyptian", cover: "📜" },
@@ -23,7 +25,7 @@ const DISCOVERY_SECTIONS = [
     ],
   },
   {
-    label: "World Languages",
+    labelKey: "home.worldLanguages",
     icon: Globe,
     books: [
       { title: "One Hundred Years of Solitude", author: "García Márquez", year: "1967", lang: "Spanish", cover: "📕" },
@@ -35,6 +37,8 @@ const DISCOVERY_SECTIONS = [
 ];
 
 export function DiscoveryFeed() {
+  const { t } = useI18n();
+
   return (
     <section className="py-16 md:py-24" style={{ backgroundColor: "var(--bg-base)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -43,26 +47,26 @@ export function DiscoveryFeed() {
             className="text-xs uppercase tracking-widest mb-2 font-medium"
             style={{ color: "var(--accent-gold-text)" }}
           >
-            Discovery
+            {t("home.discoveryEyebrow")}
           </p>
           <h2
             className="text-3xl md:text-4xl font-light"
             style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
           >
-            Explore the archive
+            {t("home.discoveryTitle")}
           </h2>
         </div>
 
         <div className="space-y-12">
-          {DISCOVERY_SECTIONS.map(({ label, icon: Icon, books }) => (
-            <div key={label}>
+          {DISCOVERY_SECTIONS.map(({ labelKey, icon: Icon, books }) => (
+            <div key={labelKey}>
               <div className="flex items-center gap-2 mb-6">
                 <Icon className="h-4 w-4" style={{ color: "var(--accent-primary)" }} />
                 <h3
                   className="text-lg font-medium"
                   style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
                 >
-                  {label}
+                  {t(labelKey)}
                 </h3>
               </div>
 

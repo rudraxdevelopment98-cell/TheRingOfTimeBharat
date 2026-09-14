@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const COLLECTIONS = [
   {
@@ -53,6 +55,8 @@ const COLLECTIONS = [
 ];
 
 export function FeaturedCollections() {
+  const { t } = useI18n();
+
   return (
     <section className="py-16 md:py-24" style={{ backgroundColor: "var(--bg-base)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -62,13 +66,13 @@ export function FeaturedCollections() {
               className="text-xs uppercase tracking-widest mb-2 font-medium"
               style={{ color: "var(--accent-gold-text)" }}
             >
-              Curated Collections
+              {t("home.featuredEyebrow")}
             </p>
             <h2
               className="text-3xl md:text-4xl font-light"
               style={{ fontFamily: "var(--font-cormorant)", color: "var(--text-primary)" }}
             >
-              Explore the library
+              {t("home.featuredTitle")}
             </h2>
           </div>
           <Link
@@ -76,7 +80,7 @@ export function FeaturedCollections() {
             className="hidden md:inline-flex items-center gap-1.5 text-sm transition-colors hover:opacity-80"
             style={{ color: "var(--text-muted)" }}
           >
-            All collections
+            {t("home.allCollections")}
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -115,7 +119,7 @@ export function FeaturedCollections() {
                   {col.name}
                 </h3>
                 <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                  {col.count.toLocaleString()} books
+                  {col.count.toLocaleString()} {t("collections.books")}
                 </p>
               </div>
 
@@ -132,7 +136,7 @@ export function FeaturedCollections() {
             className="inline-flex items-center gap-1.5 text-sm"
             style={{ color: "var(--text-muted)" }}
           >
-            All collections <ArrowRight className="h-3.5 w-3.5" />
+            {t("home.allCollections")} <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>

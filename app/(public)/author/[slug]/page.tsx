@@ -10,6 +10,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { AuthorTimeline } from "@/components/author/AuthorTimeline";
+import { TranslatableText } from "@/components/i18n/TranslatableText";
 
 type PersonData = {
   name: string;
@@ -228,12 +229,11 @@ export default async function AuthorPage({ params }: { params: { slug: string } 
             {bio && (
               <section>
                 <SectionHeader icon={<User className="h-4 w-4" />}>Biography</SectionHeader>
-                <p
+                <TranslatableText
+                  text={bio}
                   className="text-lg leading-relaxed"
                   style={{ color: "var(--text-muted)", fontFamily: "var(--font-source-serif)" }}
-                >
-                  {bio}
-                </p>
+                />
               </section>
             )}
 
